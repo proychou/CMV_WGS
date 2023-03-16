@@ -6,7 +6,7 @@
 #Usage: 
 #First build reference for bowtie and make a copy of the ref seqs:
 # 	    module load Bowtie2/2.4.4-GCC-11.2.0
-# 		bowtie2-build './refs/NC_006273.2.fasta' ./refs/cmv_ref.fasta
+# 		bowtie2-build './refs/NC_006273.2.fasta' ./refs/cmv_ref
 # 		cp './refs/NC_006273.2.fasta' ./refs/cmv_ref.fasta
 # 		module load BWA/0.7.17-GCCcore-11.2.0
 # 		bwa index ./refs/cmv_ref.fasta
@@ -265,10 +265,12 @@ mkdir -p ./consensus_seqs_all
 mkdir -p ./stats
 Rscript --vanilla cmv_generate_consensus.R sampname=\"$sampname\" ref=\"$ref\"
 
-#Annotate
-printf "\n\nAnnotating with prokka ... \n\n\n"
-mkdir -p ./annotations_prokka_cmv
-prokka --outdir './annotations_prokka_cmv/'$sampname'/' --force --kingdom 'Viruses' --genus 'Human herpesvirus 1' --species '' --proteins ./refs/HSV_proteins.faa --locustag '' --strain $sampname --prefix $sampname --gcode 1 --evalue 1e-9 './annotations_prokka_cmv/'$sampname/*.fa
+printf "\n\nAnnotating skipped due to issues with prokka \n\n\n"
+
+# #Annotate
+# printf "\n\nAnnotating with prokka ... \n\n\n"
+# mkdir -p ./annotations_prokka_cmv
+# prokka --outdir './annotations_prokka_cmv/'$sampname'/' --force --kingdom 'Viruses' --genus 'Human herpesvirus 1' --species '' --proteins ./refs/HSV_proteins.faa --locustag '' --strain $sampname --prefix $sampname --gcode 1 --evalue 1e-9 './annotations_prokka_cmv/'$sampname/*.fa
 
 
 #Clean up some files
