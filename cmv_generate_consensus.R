@@ -38,7 +38,7 @@ merged_bam_folder<-'./remapped_reads/';
 mapped_reads_folder<-'./mapped_reads/';
 con_seqs_dir<-'./consensus_seqs_all';
 
-#Make consensus sequences against reference--returns TRUE if this worked
+#Make consensus sequences against reference--returns TRUE if this worked. uses mpxv function but works for CMV too
 conseq<-clean_consensus_mpx(sampname,merged_bam_folder,mapped_reads_folder,ref);
 
 #Prepare seqs for annotation 
