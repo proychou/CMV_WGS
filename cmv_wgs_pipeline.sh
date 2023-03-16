@@ -1,5 +1,5 @@
 #!/bin/bash
-#Pipeline for assembly of MPX genomes
+#Pipeline for assembly of CMV genomes
 #Jul 2022
 #Pavitra Roychoudhury
 
@@ -187,7 +187,7 @@ fi
 
 #Generate sorted bams for mapped reads
 printf "\n\nMaking and sorting bam files ... \n\n\n"
-ref=mpx_ref
+ref=cmv_ref
 # for ref in hsv1_ref hsv2_ref_hg52 hsv2_sd90e; do
 if [ -f './mapped_reads/'$sampname'_'$ref'.sam' ]
 then
@@ -218,7 +218,7 @@ mkdir -p ./ref_for_remapping
 # for ref in hsv1_ref hsv2_ref_hg52 hsv2_sd90e; do
 bamfname='./contigs/'$sampname'/'$sampname'_aligned_scaffolds_'$ref'.bam'
 reffname=./refs/$ref'.fasta'
-Rscript --vanilla mpx_make_reference.R bamfname=\"$bamfname\" reffname=\"$reffname\" 
+Rscript --vanilla cmv_make_reference.R bamfname=\"$bamfname\" reffname=\"$reffname\" 
 # done
 
 
@@ -263,13 +263,12 @@ fi
 printf "\n\nGenerating consensus sequence ... \n\n\n"
 mkdir -p ./consensus_seqs_all
 mkdir -p ./stats
-Rscript --vanilla mpx_generate_consensus.R sampname=\"$sampname\" ref=\"$ref\"
+Rscript --vanilla cmv_generate_consensus.R sampname=\"$sampname\" ref=\"$ref\"
 
 #Annotate
 printf "\n\nAnnotating with prokka ... \n\n\n"
-printf "still building"
-# mkdir -p ./annotations_prokka_mpx
-# prokka --outdir './annotations_prokka_mpx/'$sampname'/' --force --kingdom 'Viruses' --genus 'Human herpesvirus 1' --species '' --proteins ./refs/HSV_proteins.faa --locustag '' --strain $sampname --prefix $sampname --gcode 1 --evalue 1e-9 './annotations_prokka_hsv1/'$sampname/*.fa
+mkdir -p ./annotations_prokka_cmv
+prokka --outdir './annotations_prokka_cmv/'$sampname'/' --force --kingdom 'Viruses' --genus 'Human herpesvirus 1' --species '' --proteins ./refs/HSV_proteins.faa --locustag '' --strain $sampname --prefix $sampname --gcode 1 --evalue 1e-9 './annotations_prokka_cmv/'$sampname/*.fa
 
 
 #Clean up some files
